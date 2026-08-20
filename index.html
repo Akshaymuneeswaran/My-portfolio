@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Akshay M — Data Analyst</title>
+<meta name="description" content="Akshay M — Data Analyst. SQL, Power BI, DAX, Excel. Portfolio of end-to-end analytics dashboards.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#EEF2F6;
+    --surface:#FFFFFF;
+    --surface-soft:#F5F8FA;
+    --ink:#131C26;
+    --ink-soft:#5B6B7A;
+    --line:#DCE3EA;
+    --teal:#1F6F5C;
+    --teal-dark:#154E42;
+    --teal-tint:#E4F0EC;
+    --gold:#C08A1E;
+    --gold-tint:#FBF0D3;
+    --coral:#E25C4A;
+    --coral-tint:#FCE6E2;
+    --blue:#2D6CB0;
+    --blue-tint:#E3EDF8;
+    --purple:#7A56B8;
+    --purple-tint:#EEE6F8;
+    --radius:14px;
+    --maxw:1080px;
+  }
+
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  @media (prefers-reduced-motion: reduce){
+    html{scroll-behavior:auto;}
+    *{animation-duration:0.001ms !important; transition-duration:0.001ms !important;}
+  }
+
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--ink);
+    font-family:'IBM Plex Sans', 'Segoe UI', sans-serif;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  a{color:inherit;}
+  ::selection{background:var(--teal); color:#fff;}
+
+  h1,h2,h3{
+    font-family:'Space Grotesk', 'Segoe UI', sans-serif;
+    letter-spacing:-0.01em;
+    margin:0;
+  }
+
+  .mono{font-family:'IBM Plex Mono', monospace;}
+
+  .wrap{max-width:var(--maxw); margin:0 auto; padding:0 24px;}
+
+  /* ---------- Top nav — styled like a report tab bar ---------- */
+  .tabbar{
+    position:sticky; top:0; z-index:50;
+    background:rgba(238,242,246,0.92);
+    backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--line);
+  }
+  .tabbar-inner{
+    max-width:var(--maxw); margin:0 auto; padding:0 24px;
+    display:flex; align-items:center; justify-content:space-between;
+    height:60px;
+  }
+  .brand{
+    font-family:'Space Grotesk', sans-serif;
+    font-weight:700; font-size:1.05rem;
+    display:flex; align-items:center; gap:8px;
+    text-decoration:none; color:var(--ink);
+  }
+  .brand .dot{width:9px; height:9px; border-radius:2px; background:linear-gradient(135deg, var(--teal), var(--blue)); display:inline-block; transform:rotate(45deg);}
+  .tabs{display:flex; gap:2px; height:100%;}
+  .tabs a{
+    text-decoration:none;
+    font-size:0.85rem; font-weight:600; color:var(--ink-soft);
+    padding:0 16px;
+    display:flex; align-items:center;
+    border-bottom:2px solid transparent;
+    transition:color .15s ease, border-color .15s ease;
+  }
+  .tabs a:hover, .tabs a.active{color:var(--teal-dark); border-bottom-color:var(--teal);}
+  .tabs a:focus-visible{outline:2px solid var(--teal); outline-offset:2px;}
+  .navtoggle{display:none; background:none; border:1px solid var(--line); border-radius:8px; padding:8px 10px; cursor:pointer;}
+  @media (max-width:720px){
+    .tabs{
+      position:absolute; top:60px; left:0; right:0;
+      background:var(--surface); flex-direction:column; gap:0;
+      border-bottom:1px solid var(--line);
+      display:none;
+    }
+    .tabs.open{display:flex;}
+    .tabs a{height:48px; padding:0 24px; border-bottom:1px solid var(--surface-soft); border-left:2px solid transparent;}
+    .tabs a.active{border-left-color:var(--teal); border-bottom-color:var(--surface-soft);}
+    .navtoggle{display:block;}
+  }
+
+  /* ---------- Hero ---------- */
+  header.hero{padding:64px 0 40px;}
+  h1.name{
+    font-size:clamp(2.1rem, 5vw, 3.2rem); font-weight:700; line-height:1.05;
+    background:linear-gradient(100deg, var(--teal) 0%, var(--blue) 55%, var(--purple) 100%);
+    -webkit-background-clip:text; background-clip:text; color:transparent;
+  }
+  .role{font-size:clamp(1.05rem, 2vw, 1.3rem); color:var(--ink-soft); margin-top:10px; max-width:640px;}
+  .contact-row{
+    display:flex; flex-wrap:wrap; gap:10px;
+    margin-top:26px;
+  }
+  .pill-link{
+    display:inline-flex; align-items:center; gap:8px;
+    background:var(--surface); border:1px solid var(--line);
+    padding:9px 16px; border-radius:100px;
+    font-size:0.88rem; font-weight:600; text-decoration:none; color:var(--ink);
+    transition:border-color .15s ease, transform .15s ease;
+  }
+  .pill-link:hover{border-color:var(--teal); transform:translateY(-1px);}
+  .pill-link svg{width:15px; height:15px; flex-shrink:0;}
+  .pill-link.primary{background:var(--teal); border-color:var(--teal); color:#fff;}
+  .pill-link.primary:hover{background:var(--teal-dark); border-color:var(--teal-dark);}
+
+  /* ---------- KPI strip — dashboard "card visuals" ---------- */
+  .kpi-strip{
+    display:grid; grid-template-columns:repeat(4, 1fr); gap:14px;
+    margin-top:40px;
+  }
+  @media (max-width:760px){ .kpi-strip{grid-template-columns:repeat(2, 1fr);} }
+  .kpi-card{
+    background:var(--surface); border:1px solid var(--line); border-radius:var(--radius);
+    padding:18px 18px 16px;
+    position:relative; overflow:hidden;
+  }
+  .kpi-card::before{
+    content:""; position:absolute; top:0; left:0; right:0; height:3px;
+    background:var(--teal);
+  }
+  .kpi-card:nth-child(2)::before{background:var(--gold);}
+  .kpi-card:nth-child(4)::before{background:var(--gold);}
+  .kpi-num{font-family:'IBM Plex Mono', monospace; font-size:1.5rem; font-weight:600; color:var(--ink);}
+  .kpi-label{font-size:0.76rem; color:var(--ink-soft); margin-top:4px; line-height:1.35;}
+
+  /* ---------- Section shell ---------- */
+  section{padding:56px 0;}
+  .section-head{margin-bottom:28px;}
+  .section-tag{
+    font-family:'IBM Plex Mono', monospace; font-size:0.76rem; font-weight:600;
+    text-transform:uppercase; letter-spacing:0.08em;
+    display:inline-block; padding:4px 10px; border-radius:6px;
+    color:var(--teal-dark); background:var(--teal-tint);
+  }
+  .section-tag.gold{color:var(--gold); background:var(--gold-tint);}
+  .section-tag.coral{color:var(--coral); background:var(--coral-tint);}
+  .section-title{font-size:clamp(1.4rem, 3vw, 1.9rem); margin-top:6px;}
+  section#about{padding-top:24px;}
+  .about-text{max-width:700px; color:var(--ink-soft); font-size:1rem;}
+
+  /* ---------- Skills — spec-sheet table style ---------- */
+  .skills-grid{display:grid; grid-template-columns:1fr 1fr; gap:0; border:1px solid var(--line); border-radius:var(--radius); overflow:hidden; background:var(--surface);}
+  @media (max-width:700px){.skills-grid{grid-template-columns:1fr;}}
+  .skill-col{padding:22px 24px;}
+  .skill-col + .skill-col{border-left:1px solid var(--line);}
+  @media (max-width:700px){.skill-col + .skill-col{border-left:none; border-top:1px solid var(--line);}}
+  .skill-col h3{font-size:0.95rem; margin-bottom:14px; display:flex; align-items:center; gap:8px;}
+  .skill-col h3 .idx{font-family:'IBM Plex Mono', monospace; color:var(--teal); font-size:0.8rem;}
+  .skill-col:nth-child(2) h3 .idx{color:var(--blue);}
+  .skill-col:nth-child(2){background:var(--blue-tint);}
+  .skill-row{
+    display:flex; justify-content:space-between; align-items:baseline;
+    padding:9px 0; border-bottom:1px dashed var(--line);
+    font-size:0.9rem;
+  }
+  .skill-row:last-child{border-bottom:none;}
+  .skill-row span:first-child{color:var(--ink);}
+  .skill-row span:last-child{font-family:'IBM Plex Mono', monospace; font-size:0.72rem; color:var(--ink-soft);}
+
+  /* ---------- Experience ---------- */
+  .exp-card{
+    background:var(--surface); border:1px solid var(--line); border-left:4px solid var(--gold);
+    border-radius:var(--radius);
+    padding:26px 28px;
+  }
+  .exp-head{display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:8px; margin-bottom:14px;}
+  .exp-role{font-size:1.1rem; font-weight:600;}
+  .exp-org{color:var(--teal-dark); font-weight:600; font-size:0.92rem;}
+  .exp-period{font-family:'IBM Plex Mono', monospace; font-size:0.8rem; color:var(--gold); background:var(--gold-tint); padding:4px 10px; border-radius:100px; white-space:nowrap;}
+  .exp-list{margin:0; padding-left:20px; color:var(--ink-soft); font-size:0.92rem;}
+  .exp-list li{margin-bottom:7px;}
+
+  /* ---------- Projects — report canvas cards ---------- */
+  .project-card{
+    background:var(--surface); border:1px solid var(--line); border-radius:var(--radius);
+    margin-bottom:24px; overflow:hidden;
+  }
+  .report-ribbon{
+    display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap;
+    background:var(--surface-soft); border-bottom:1px solid var(--line);
+    padding:14px 22px;
+  }
+  .report-ribbon-left{display:flex; align-items:center; gap:12px;}
+  .page-tag{
+    font-family:'IBM Plex Mono', monospace; font-size:0.75rem; font-weight:600;
+    color:#fff; background:var(--teal); width:26px; height:26px; border-radius:6px;
+    display:flex; align-items:center; justify-content:center; flex-shrink:0;
+  }
+  .project-card:nth-of-type(2) .page-tag{background:var(--coral);}
+  .project-title{font-size:1.15rem; font-weight:600;}
+  .project-tools{
+    font-family:'IBM Plex Mono', monospace; font-size:0.72rem; font-weight:600;
+    color:var(--teal-dark); background:var(--teal-tint);
+    padding:5px 11px; border-radius:6px; white-space:nowrap;
+  }
+  .project-card:nth-of-type(2) .project-tools{color:var(--coral); background:var(--coral-tint);}
+  .project-card:nth-of-type(1){border-top:3px solid var(--teal);}
+  .project-card:nth-of-type(2){border-top:3px solid var(--coral);}
+  .project-body{padding:22px;}
+  .project-desc{color:var(--ink-soft); font-size:0.94rem; margin-bottom:16px;}
+  .project-stats{display:flex; flex-wrap:wrap; gap:10px; margin-bottom:18px;}
+  .mini-stat{
+    background:var(--surface-soft); border:1px solid var(--line); border-top:3px solid var(--teal); border-radius:8px;
+    padding:8px 12px; font-size:0.78rem;
+  }
+  .mini-stat:nth-child(2){border-top-color:var(--gold);}
+  .mini-stat:nth-child(3){border-top-color:var(--blue);}
+  .mini-stat:nth-child(4){border-top-color:var(--purple);}
+  .mini-stat b{font-family:'IBM Plex Mono', monospace; display:block; font-size:0.95rem; color:var(--ink);}
+  .project-bullets{margin:0; padding-left:20px; color:var(--ink-soft); font-size:0.92rem;}
+  .project-bullets li{margin-bottom:8px;}
+  .project-bullets strong{color:var(--ink);}
+
+  /* ---------- Contact / footer ---------- */
+  #contact{padding-bottom:20px;}
+  .contact-card{
+    background:linear-gradient(120deg, var(--teal-dark) 0%, var(--blue) 55%, var(--purple) 100%);
+    color:#fff; border-radius:var(--radius);
+    padding:40px 32px; text-align:center;
+  }
+  .contact-card h2{font-size:clamp(1.3rem,3vw,1.8rem); margin-bottom:10px;}
+  .contact-card p{color:#CFE3DD; max-width:520px; margin:0 auto 22px;}
+  .contact-card .contact-row{justify-content:center;}
+  .contact-card .pill-link{background:rgba(255,255,255,0.08); border-color:rgba(255,255,255,0.25); color:#fff;}
+  .contact-card .pill-link:hover{background:rgba(255,255,255,0.18); border-color:#fff;}
+
+  footer{text-align:center; padding:26px 0 40px; color:var(--ink-soft); font-size:0.82rem;}
+</style>
+</head>
+<body>
+
+<nav class="tabbar">
+  <div class="tabbar-inner">
+    <a href="#top" class="brand"><span class="dot"></span>Akshay M</a>
+    <button class="navtoggle" id="navToggle" aria-label="Toggle navigation" aria-expanded="false">☰</button>
+    <div class="tabs" id="navTabs">
+      <a href="#about">About</a>
+      <a href="#skills">Skills</a>
+      <a href="#experience">Experience</a>
+      <a href="#projects">Projects</a>
+      <a href="#contact">Contact</a>
+    </div>
+  </div>
+</nav>
+
+<div class="wrap" id="top">
+  <header class="hero" id="about">
+    <h1 class="name">Akshay M</h1>
+    <p class="role">Data Analyst turning raw, messy datasets into decision-ready dashboards — SQL for data cleaning &amp; modeling, Power BI &amp; DAX for reporting, Excel for the day-to-day.</p>
+
+    <div class="contact-row">
+      <a class="pill-link primary" href="mailto:akshaymuneeswaran21@gmail.com">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16v16H4z" stroke="none"/><path d="M22 6l-10 7L2 6" stroke="currentColor" fill="none"/><path d="M2 6h20v12H2z" stroke="currentColor" fill="none"/></svg>
+        akshaymuneeswaran21@gmail.com
+      </a>
+      <a class="pill-link" href="https://www.linkedin.com/in/akshay2121/" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5C4.98 4.88 3.87 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1s2.48 1.12 2.48 2.5zM.5 8h4V23h-4V8zm7 0h3.8v2.05h.05c.53-1 1.83-2.05 3.77-2.05 4.03 0 4.78 2.65 4.78 6.1V23h-4v-6.6c0-1.58-.03-3.6-2.2-3.6-2.2 0-2.54 1.72-2.54 3.49V23h-4V8z"/></svg>
+        linkedin.com/in/akshay2121
+      </a>
+      <a class="pill-link" href="tel:9789086413">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.8 19.8 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.8 19.8 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.99.36 1.96.68 2.9a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.18-1.27a2 2 0 0 1 2.11-.45c.94.32 1.91.55 2.9.68A2 2 0 0 1 22 16.92z"/></svg>
+        +91 97890 86413
+      </a>
+      <span class="pill-link" style="cursor:default;">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        Chennai, India
+      </span>
+    </div>
+  </header>
+
+  <section id="skills">
+    <div class="section-head">
+      <span class="section-tag">// 01 — capabilities</span>
+      <h2 class="section-title">Technical Skills</h2>
+    </div>
+    <div class="skills-grid">
+      <div class="skill-col">
+        <h3><span class="idx">A.</span> Data &amp; Reporting Tools</h3>
+        <div class="skill-row"><span>SQL Server</span><span>QUERIES · JOINS · CTEs</span></div>
+        <div class="skill-row"><span>Power BI</span><span>DASHBOARDS · KPI</span></div>
+        <div class="skill-row"><span>DAX</span><span>SUM · DIVIDE · CALCULATE</span></div>
+        <div class="skill-row"><span>Power Query</span><span>ETL · TRANSFORM</span></div>
+        <div class="skill-row"><span>Microsoft Excel</span><span>VLOOKUP · PIVOT</span></div>
+      </div>
+      <div class="skill-col">
+        <h3><span class="idx">B.</span> Analytical Practice</h3>
+        <div class="skill-row"><span>Data Cleaning</span><span>PROFILING · QA</span></div>
+        <div class="skill-row"><span>Data Modeling</span><span>RELATIONSHIPS</span></div>
+        <div class="skill-row"><span>Data Visualization</span><span>REPORT DESIGN</span></div>
+        <div class="skill-row"><span>Problem Solving</span><span>ROOT-CAUSE</span></div>
+        <div class="skill-row"><span>Collaboration</span><span>TEAM SUPPORT</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="experience">
+    <div class="section-head">
+      <span class="section-tag gold">// 02 — track record</span>
+      <h2 class="section-title">Professional Experience</h2>
+    </div>
+    <div class="exp-card">
+      <div class="exp-head">
+        <div>
+          <div class="exp-role">Process Executive</div>
+          <div class="exp-org">Cognizant Technology Solutions</div>
+        </div>
+        <span class="exp-period">May 2024 — 2026</span>
+      </div>
+      <ul class="exp-list">
+        <li>Validated product attributes against SOPs for Walmart, ensuring compliance and data accuracy at scale.</li>
+        <li>Inspected post-production quality output and maintained high standards of data accuracy.</li>
+        <li>Prepared daily productivity and accuracy reports in Microsoft Excel for team-level review.</li>
+        <li>Maintained query trackers and resolved process-related issues efficiently.</li>
+        <li>Led team huddles and monitored monthly performance metrics to drive team output.</li>
+        <li>Trained new associates and implemented quality-control checks for consistent results.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="projects">
+    <div class="section-head">
+      <span class="section-tag coral">// 03 — selected work</span>
+      <h2 class="section-title">Featured Projects</h2>
+    </div>
+
+    <div class="project-card">
+      <div class="report-ribbon">
+        <div class="report-ribbon-left">
+          <span class="page-tag">01</span>
+          <span class="project-title">Cafe Sales Performance Dashboard</span>
+        </div>
+        <span class="project-tools">SQL SERVER · POWER BI · DAX</span>
+      </div>
+      <div class="project-body">
+        <p class="project-desc">Took a raw, messy cafe sales dataset through a complete end-to-end analytics workflow — profiling, cleaning, modeling and visualizing raw transaction logs into dynamic business insights.</p>
+        <div class="project-stats">
+          <div class="mini-stat"><b>₹88.95K</b>Total Revenue</div>
+          <div class="mini-stat"><b>10K</b>Total Transactions</div>
+          <div class="mini-stat"><b>30K</b>Total Quantity Sold</div>
+        </div>
+        <ul class="project-bullets">
+          <li><strong>Data Cleaning &amp; Validation (SQL):</strong> Profiled raw tables to locate NULL and error values while preserving raw source tables separately; recovered missing Total Spent by back-calculating from Quantity × Price Per Unit, and validated transaction timestamps for duplicates.</li>
+          <li><strong>Data Modeling &amp; DAX (Power BI):</strong> Built a dedicated Date Table on a 1-to-many relationship with sales records, then authored DAX measures for Total Revenue, Total Transactions and Total Quantity Sold with interactive Date, Month and Quarter slicers.</li>
+          <li><strong>Dashboard Visualizations:</strong> Designed visuals tracking monthly revenue trends, item-wise sales, payment-method distribution (Cash, Credit Card, Wallet) and Order Type split (In-store vs Takeaway).</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="project-card">
+      <div class="report-ribbon">
+        <div class="report-ribbon-left">
+          <span class="page-tag">02</span>
+          <span class="project-title">Gym Sales &amp; Membership Analytics Dashboard</span>
+        </div>
+        <span class="project-tools">POWER BI · DAX · POWER QUERY · EXCEL</span>
+      </div>
+      <div class="project-body">
+        <p class="project-desc">Analyzed membership trends, revenue performance, customer behavior and payment patterns across 5 gym branches to support business decision-making.</p>
+        <div class="project-stats">
+          <div class="mini-stat"><b>₹9.13M</b>Revenue, 2025–26</div>
+          <div class="mini-stat"><b>600+</b>Members</div>
+          <div class="mini-stat"><b>5</b>Branches</div>
+          <div class="mini-stat"><b>91.3%</b>Payment Paid Status</div>
+        </div>
+        <ul class="project-bullets">
+          <li><strong>Data Preparation (Power Query):</strong> Removed duplicate Membership IDs, handled missing fee values, and filtered out non-returning customers to focus strictly on active member records.</li>
+          <li><strong>Data Analysis &amp; DAX Measures:</strong> Formulated DAX metrics (SUM, DIVIDE, CALCULATE) for total sales, branch-wise revenue breakdowns, and KPI tracking.</li>
+          <li><strong>Consolidated Dashboard View:</strong> Interactive reporting covering revenue trends, branch performance (Kodambakkam, Arumbakkam, Virugambakkam, Valasaravakkam, Saligramam), best-selling membership plans (1, 3, 6, 12 months), payment status, and gender distribution.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact">
+    <div class="contact-card">
+      <h2>Let's talk data.</h2>
+      <p>Open to Data Analyst opportunities where SQL, Power BI and clean reporting can drive real decisions.</p>
+      <div class="contact-row">
+        <a class="pill-link" href="mailto:akshaymuneeswaran21@gmail.com">Email Me</a>
+        <a class="pill-link" href="https://www.linkedin.com/in/akshay2121/" target="_blank" rel="noopener">Connect on LinkedIn</a>
+      </div>
+    </div>
+  </section>
+
+  <footer>© 2026 Akshay M · Built for Data Analytics Portfolio · Chennai, India</footer>
+</div>
+
+<script>
+  // Mobile nav toggle
+  const toggle = document.getElementById('navToggle');
+  const tabs = document.getElementById('navTabs');
+  toggle.addEventListener('click', () => {
+    const open = tabs.classList.toggle('open');
+    toggle.setAttribute('aria-expanded', open);
+  });
+  tabs.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+    tabs.classList.remove('open');
+    toggle.setAttribute('aria-expanded', 'false');
+  }));
+
+  // Scroll-spy active tab
+  const sections = ['about','skills','experience','projects','contact'].map(id => document.getElementById(id));
+  const links = tabs.querySelectorAll('a');
+  const spy = () => {
+    let current = sections[0].id;
+    const y = window.scrollY + 100;
+    sections.forEach(s => { if (s.offsetTop <= y) current = s.id; });
+    links.forEach(l => l.classList.toggle('active', l.getAttribute('href') === '#' + current));
+  };
+  document.addEventListener('scroll', spy, { passive: true });
+  spy();
+</script>
+
+</body>
+</html>
