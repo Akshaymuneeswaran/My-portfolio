@@ -9,23 +9,26 @@
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
 <style>
   :root{
-    --bg:#EEF2F6;
-    --surface:#FFFFFF;
-    --surface-soft:#F5F8FA;
-    --ink:#131C26;
-    --ink-soft:#5B6B7A;
-    --line:#DCE3EA;
-    --teal:#1F6F5C;
-    --teal-dark:#154E42;
-    --teal-tint:#E4F0EC;
-    --gold:#C08A1E;
-    --gold-tint:#FBF0D3;
-    --coral:#E25C4A;
-    --coral-tint:#FCE6E2;
-    --blue:#2D6CB0;
-    --blue-tint:#E3EDF8;
-    --purple:#7A56B8;
-    --purple-tint:#EEE6F8;
+    /* Refreshed dark, professional coding palette */
+    --bg:#0A0E17;
+    --surface:#111827;
+    --surface-soft:#1F2937;
+    --ink:#F3F4F6;
+    --ink-soft:#9CA3AF;
+    --line:#374151;
+    --teal:#0D9488;
+    --teal-dark:#0F766E;
+    --teal-tint: rgba(13, 148, 136, 0.15);
+    --gold:#F59E0B;
+    --gold-tint: rgba(245, 158, 11, 0.15);
+    --coral:#EF4444;
+    --coral-tint: rgba(239, 68, 68, 0.15);
+    --blue:#3B82F6;
+    --blue-tint: rgba(59, 130, 246, 0.15);
+    --purple:#8B5CF6;
+    --purple-tint: rgba(139, 92, 246, 0.15);
+    --cyan: #22D3EE; /* New highlight for code theme */
+    --green: #4ADE80; /* New highlight for code theme */
     --radius:14px;
     --maxw:1080px;
   }
@@ -44,10 +47,15 @@
     font-family:'IBM Plex Sans', 'Segoe UI', sans-serif;
     line-height:1.6;
     -webkit-font-smoothing:antialiased;
+    /* Added subtle grid background pattern */
+    background-image: 
+      linear-gradient(rgba(55, 65, 81, 0.1) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(55, 65, 81, 0.1) 1px, transparent 1px);
+    background-size: 30px 30px;
   }
 
   a{color:inherit;}
-  ::selection{background:var(--teal); color:#fff;}
+  ::selection{background:rgba(13, 148, 136, 0.3); color:#fff;}
 
   h1,h2,h3{
     font-family:'Space Grotesk', 'Segoe UI', sans-serif;
@@ -59,11 +67,11 @@
 
   .wrap{max-width:var(--maxw); margin:0 auto; padding:0 24px;}
 
-  /* ---------- Top nav — styled like a report tab bar ---------- */
+  /* ---------- Top nav ---------- */
   .tabbar{
     position:sticky; top:0; z-index:50;
-    background:rgba(238,242,246,0.92);
-    backdrop-filter:blur(8px);
+    background:rgba(10, 14, 23, 0.9); /* Dark background with transparency */
+    backdrop-filter:blur(10px);
     border-bottom:1px solid var(--line);
   }
   .tabbar-inner{
@@ -77,7 +85,7 @@
     display:flex; align-items:center; gap:8px;
     text-decoration:none; color:var(--ink);
   }
-  .brand .dot{width:9px; height:9px; border-radius:2px; background:linear-gradient(135deg, var(--teal), var(--blue)); display:inline-block; transform:rotate(45deg);}
+  .brand .dot{width:9px; height:9px; border-radius:2px; background:linear-gradient(135deg, var(--teal), var(--cyan)); display:inline-block; transform:rotate(45deg);}
   .tabs{display:flex; gap:2px; height:100%;}
   .tabs a{
     text-decoration:none;
@@ -87,9 +95,9 @@
     border-bottom:2px solid transparent;
     transition:color .15s ease, border-color .15s ease;
   }
-  .tabs a:hover, .tabs a.active{color:var(--teal-dark); border-bottom-color:var(--teal);}
-  .tabs a:focus-visible{outline:2px solid var(--teal); outline-offset:2px;}
-  .navtoggle{display:none; background:none; border:1px solid var(--line); border-radius:8px; padding:8px 10px; cursor:pointer;}
+  .tabs a:hover, .tabs a.active{color:var(--cyan); border-bottom-color:var(--cyan);}
+  .tabs a:focus-visible{outline:2px solid var(--cyan); outline-offset:2px;}
+  .navtoggle{display:none; background:none; border:1px solid var(--line); border-radius:8px; padding:8px 10px; cursor:pointer; color: var(--ink);}
   @media (max-width:720px){
     .tabs{
       position:absolute; top:60px; left:0; right:0;
@@ -99,44 +107,65 @@
     }
     .tabs.open{display:flex;}
     .tabs a{height:48px; padding:0 24px; border-bottom:1px solid var(--surface-soft); border-left:2px solid transparent;}
-    .tabs a.active{border-left-color:var(--teal); border-bottom-color:var(--surface-soft);}
+    .tabs a.active{border-left-color:var(--cyan); border-bottom-color:var(--surface-soft);}
     .navtoggle{display:block;}
   }
 
   /* ---------- Hero ---------- */
-  header.hero{padding:64px 0 40px;}
-  h1.name{
-    font-size:clamp(2.1rem, 5vw, 3.2rem); font-weight:700; line-height:1.05;
-    background:linear-gradient(100deg, var(--teal) 0%, var(--blue) 55%, var(--purple) 100%);
-    -webkit-background-clip:text; background-clip:text; color:transparent;
+  header.hero{
+    padding:80px 0 60px;
+    position: relative;
   }
-  .role{font-size:clamp(1.05rem, 2vw, 1.3rem); color:var(--ink-soft); margin-top:10px; max-width:640px;}
+  /* Subtle glow behind hero */
+  header.hero::after {
+    content: "";
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 60%; height: 60%;
+    background: radial-gradient(circle, rgba(13, 148, 136, 0.2) 0%, rgba(59, 130, 246, 0.1) 40%, transparent 70%);
+    filter: blur(50px);
+    z-index: -1;
+  }
+  h1.name{
+    font-size:clamp(2.5rem, 6vw, 4rem); font-weight:700; line-height:1.05;
+    background:linear-gradient(100deg, var(--teal) 0%, var(--blue) 50%, var(--purple) 100%);
+    -webkit-background-clip:text; background-clip:text; color:transparent;
+    text-shadow: 0 0 30px rgba(13, 148, 136, 0.3);
+  }
+  .role{font-size:clamp(1.1rem, 2.5vw, 1.4rem); color:var(--ink-soft); margin-top:15px; max-width:680px; font-family: 'IBM Plex Sans', sans-serif;}
   .contact-row{
-    display:flex; flex-wrap:wrap; gap:10px;
-    margin-top:26px;
+    display:flex; flex-wrap:wrap; gap:12px;
+    margin-top:32px;
   }
   .pill-link{
     display:inline-flex; align-items:center; gap:8px;
     background:var(--surface); border:1px solid var(--line);
-    padding:9px 16px; border-radius:100px;
-    font-size:0.88rem; font-weight:600; text-decoration:none; color:var(--ink);
-    transition:border-color .15s ease, transform .15s ease;
+    padding:10px 20px; border-radius:100px;
+    font-size:0.9rem; font-weight:600; text-decoration:none; color:var(--ink);
+    transition:border-color .15s ease, transform .15s ease, box-shadow .15s ease;
   }
-  .pill-link:hover{border-color:var(--teal); transform:translateY(-1px);}
-  .pill-link svg{width:15px; height:15px; flex-shrink:0;}
+  .pill-link:hover{border-color:var(--cyan); transform:translateY(-2px); box-shadow: 0 4px 12px rgba(34, 211, 238, 0.15);}
+  .pill-link svg{width:16px; height:16px; flex-shrink:0;}
   .pill-link.primary{background:var(--teal); border-color:var(--teal); color:#fff;}
   .pill-link.primary:hover{background:var(--teal-dark); border-color:var(--teal-dark);}
 
-  /* ---------- KPI strip — dashboard "card visuals" ---------- */
+  /* ---------- KPI strip ---------- */
   .kpi-strip{
-    display:grid; grid-template-columns:repeat(4, 1fr); gap:14px;
-    margin-top:40px;
+    display:grid; grid-template-columns:repeat(4, 1fr); gap:16px;
+    margin-top:60px;
   }
   @media (max-width:760px){ .kpi-strip{grid-template-columns:repeat(2, 1fr);} }
   .kpi-card{
     background:var(--surface); border:1px solid var(--line); border-radius:var(--radius);
-    padding:18px 18px 16px;
+    padding:20px;
     position:relative; overflow:hidden;
+    transition: transform .2s ease, border-color .2s ease, box-shadow .2s ease;
+  }
+  .kpi-card:hover {
+    transform: translateY(-3px);
+    border-color: rgba(34, 211, 238, 0.3);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
   }
   .kpi-card::before{
     content:""; position:absolute; top:0; left:0; right:0; height:3px;
@@ -144,120 +173,204 @@
   }
   .kpi-card:nth-child(2)::before{background:var(--gold);}
   .kpi-card:nth-child(4)::before{background:var(--gold);}
-  .kpi-num{font-family:'IBM Plex Mono', monospace; font-size:1.5rem; font-weight:600; color:var(--ink);}
-  .kpi-label{font-size:0.76rem; color:var(--ink-soft); margin-top:4px; line-height:1.35;}
+  .kpi-num{font-family:'IBM Plex Mono', monospace; font-size:1.7rem; font-weight:600; color:var(--ink); text-shadow: 0 0 10px rgba(243, 244, 246, 0.2);}
+  .kpi-label{font-size:0.8rem; color:var(--ink-soft); margin-top:6px; line-height:1.4;}
 
   /* ---------- Section shell ---------- */
-  section{padding:56px 0;}
-  .section-head{margin-bottom:28px;}
+  section{padding:70px 0;}
+  .section-head{margin-bottom:32px;}
   .section-tag{
-    font-family:'IBM Plex Mono', monospace; font-size:0.76rem; font-weight:600;
-    text-transform:uppercase; letter-spacing:0.08em;
-    display:inline-block; padding:4px 10px; border-radius:6px;
-    color:var(--teal-dark); background:var(--teal-tint);
+    font-family:'IBM Plex Mono', monospace; font-size:0.78rem; font-weight:600;
+    text-transform:uppercase; letter-spacing:0.1em;
+    display:inline-block; padding:5px 12px; border-radius:6px;
+    color:var(--cyan); background:rgba(34, 211, 238, 0.1);
+    border: 1px solid rgba(34, 211, 238, 0.2);
   }
-  .section-tag.gold{color:var(--gold); background:var(--gold-tint);}
-  .section-tag.coral{color:var(--coral); background:var(--coral-tint);}
-  .section-title{font-size:clamp(1.4rem, 3vw, 1.9rem); margin-top:6px;}
-  section#about{padding-top:24px;}
-  .about-text{max-width:700px; color:var(--ink-soft); font-size:1rem;}
+  .section-tag.gold{color:var(--gold); background:var(--gold-tint); border-color: rgba(245, 158, 11, 0.2);}
+  .section-tag.coral{color:var(--coral); background:var(--coral-tint); border-color: rgba(239, 68, 68, 0.2);}
+  .section-title{font-size:clamp(1.6rem, 3.5vw, 2.2rem); margin-top:8px;}
+  section#about{padding-top:40px;}
+  .about-text{max-width:720px; color:var(--ink-soft); font-size:1.05rem;}
 
-  /* ---------- Skills — spec-sheet table style ---------- */
+  /* ---------- Skills — code-theme table style ---------- */
   .skills-grid{display:grid; grid-template-columns:1fr 1fr; gap:0; border:1px solid var(--line); border-radius:var(--radius); overflow:hidden; background:var(--surface);}
   @media (max-width:700px){.skills-grid{grid-template-columns:1fr;}}
-  .skill-col{padding:22px 24px;}
+  .skill-col{padding:26px;}
   .skill-col + .skill-col{border-left:1px solid var(--line);}
   @media (max-width:700px){.skill-col + .skill-col{border-left:none; border-top:1px solid var(--line);}}
-  .skill-col h3{font-size:0.95rem; margin-bottom:14px; display:flex; align-items:center; gap:8px;}
-  .skill-col h3 .idx{font-family:'IBM Plex Mono', monospace; color:var(--teal); font-size:0.8rem;}
-  .skill-col:nth-child(2) h3 .idx{color:var(--blue);}
-  .skill-col:nth-child(2){background:var(--blue-tint);}
+  .skill-col h3{font-size:1rem; margin-bottom:16px; display:flex; align-items:center; gap:8px;}
+  .skill-col h3 .idx{font-family:'IBM Plex Mono', monospace; color:var(--cyan); font-size:0.85rem;}
+  /* Code function style for skill categories */
+  .skill-col h3::before { content: "function "; color: var(--purple); font-family: 'IBM Plex Mono', monospace; font-weight: 500; font-size: 0.9rem;}
+  .skill-col h3::after { content: "() {"; color: var(--ink-soft); font-family: 'IBM Plex Mono', monospace; font-weight: 500; font-size: 0.9rem;}
+
+  .skill-list-wrap::after { content: "}"; color: var(--ink-soft); font-family: 'IBM Plex Mono', monospace; font-weight: 500; font-size: 0.9rem; margin-top: 10px; display: block;}
+
   .skill-row{
     display:flex; justify-content:space-between; align-items:baseline;
-    padding:9px 0; border-bottom:1px dashed var(--line);
-    font-size:0.9rem;
+    padding:11px 0; border-bottom:1px solid rgba(55, 65, 81, 0.3);
+    font-size:0.92rem;
   }
   .skill-row:last-child{border-bottom:none;}
   .skill-row span:first-child{color:var(--ink);}
-  .skill-row span:last-child{font-family:'IBM Plex Mono', monospace; font-size:0.72rem; color:var(--ink-soft);}
+  .skill-row span:last-child{
+    font-family:'IBM Plex Mono', monospace; font-size:0.75rem; 
+    color:var(--green); /* Green for 'values' */
+    background: rgba(74, 222, 128, 0.05); padding: 2px 6px; border-radius: 4px;
+  }
 
   /* ---------- Experience ---------- */
   .exp-card{
     background:var(--surface); border:1px solid var(--line); border-left:4px solid var(--gold);
     border-radius:var(--radius);
-    padding:26px 28px;
+    padding:28px 30px;
+    transition: transform .2s ease, box-shadow .2s ease;
   }
-  .exp-head{display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:8px; margin-bottom:14px;}
-  .exp-role{font-size:1.1rem; font-weight:600;}
-  .exp-org{color:var(--teal-dark); font-weight:600; font-size:0.92rem;}
-  .exp-period{font-family:'IBM Plex Mono', monospace; font-size:0.8rem; color:var(--gold); background:var(--gold-tint); padding:4px 10px; border-radius:100px; white-space:nowrap;}
-  .exp-list{margin:0; padding-left:20px; color:var(--ink-soft); font-size:0.92rem;}
-  .exp-list li{margin-bottom:7px;}
+  .exp-card:hover {
+    transform: translateX(4px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+  }
+  .exp-head{display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:10px; margin-bottom:16px;}
+  .exp-role{font-size:1.15rem; font-weight:600;}
+  .exp-org{color:var(--cyan); font-weight:600; font-size:0.95rem;}
+  .exp-period{font-family:'IBM Plex Mono', monospace; font-size:0.8rem; color:var(--gold); background:var(--gold-tint); padding:5px 12px; border-radius:100px; white-space:nowrap;}
+  .exp-list{margin:0; padding-left:22px; color:var(--ink-soft); font-size:0.94rem;}
+  .exp-list li{margin-bottom:9px; position: relative;}
+  /* Code comment style for list items */
+  .exp-list li::before {
+    content: "// ";
+    color: #4B5563; /* Comment color */
+    font-family: 'IBM Plex Mono', monospace;
+    position: absolute;
+    left: -22px;
+  }
 
   /* ---------- Projects — report canvas cards ---------- */
   .project-card{
     background:var(--surface); border:1px solid var(--line); border-radius:var(--radius);
-    margin-bottom:24px; overflow:hidden;
+    margin-bottom:28px; overflow:hidden;
+    transition: transform .2s ease, border-color .2s ease, box-shadow .2s ease;
   }
+  .project-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
+  }
+  .project-card.card-teal:hover { border-color: rgba(13, 148, 136, 0.5); }
+  .project-card.card-coral:hover { border-color: rgba(239, 68, 68, 0.5); }
+
   .report-ribbon{
     display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap;
     background:var(--surface-soft); border-bottom:1px solid var(--line);
-    padding:14px 22px;
+    padding:16px 24px;
   }
-  .report-ribbon-left{display:flex; align-items:center; gap:12px;}
+  .report-ribbon-left{display:flex; align-items:center; gap:14px;}
   .page-tag{
-    font-family:'IBM Plex Mono', monospace; font-size:0.75rem; font-weight:600;
-    color:#fff; background:var(--teal); width:26px; height:26px; border-radius:6px;
+    font-family:'IBM Plex Mono', monospace; font-size:0.78rem; font-weight:600;
+    color:#fff; background:var(--teal); width:28px; height:28px; border-radius:6px;
     display:flex; align-items:center; justify-content:center; flex-shrink:0;
   }
   .card-coral .page-tag{background:var(--coral);}
-  .project-title{font-size:1.15rem; font-weight:600;}
+  .project-title{font-size:1.2rem; font-weight:600;}
   .project-tools{
-    font-family:'IBM Plex Mono', monospace; font-size:0.72rem; font-weight:600;
-    color:var(--teal-dark); background:var(--teal-tint);
-    padding:5px 11px; border-radius:6px; white-space:nowrap;
+    font-family:'IBM Plex Mono', monospace; font-size:0.75rem; font-weight:600;
+    color:var(--cyan); background:rgba(34, 211, 238, 0.1);
+    padding:6px 12px; border-radius:6px; white-space:nowrap;
+    border: 1px solid rgba(34, 211, 238, 0.15);
   }
-  .card-coral .project-tools{color:var(--coral); background:var(--coral-tint);}
+  .card-coral .project-tools{color:var(--coral); background:var(--coral-tint); border-color: rgba(239, 68, 68, 0.15);}
   .project-card.card-teal{border-top:3px solid var(--teal);}
   .project-card.card-coral{border-top:3px solid var(--coral);}
-  .project-body{padding:22px;}
-  .project-desc{color:var(--ink-soft); font-size:0.94rem; margin-bottom:16px;}
+  .project-body{padding:24px;}
+  .project-desc{color:var(--ink-soft); font-size:0.96rem; margin-bottom:18px;}
   .dashboard-frame{
     border:1px solid var(--line); border-radius:10px; overflow:hidden;
-    margin-bottom:18px; background:var(--surface-soft);
+    margin-bottom:20px; background:var(--surface-soft);
+    position: relative;
+    /* Added window controls for a report/app feel */
+    padding-top: 25px;
+  }
+  .dashboard-frame::before {
+    content: "● ● ●";
+    color: #4B5563;
+    font-size: 8px;
+    position: absolute;
+    top: 8px; left: 12px;
+    letter-spacing: 2px;
   }
   .dashboard-frame img{display:block; width:100%; height:auto;}
   .dashboard-caption{
-    font-family:'IBM Plex Mono', monospace; font-size:0.72rem; color:var(--ink-soft);
-    padding:8px 14px; border-top:1px solid var(--line); background:var(--surface);
+    font-family:'IBM Plex Mono', monospace; font-size:0.75rem; color:var(--ink-soft);
+    padding:10px 16px; border-top:1px solid var(--line); background:var(--surface);
   }
-  .project-stats{display:flex; flex-wrap:wrap; gap:10px; margin-bottom:18px;}
+  .project-stats{display:flex; flex-wrap:wrap; gap:12px; margin-bottom:20px;}
   .mini-stat{
     background:var(--surface-soft); border:1px solid var(--line); border-top:3px solid var(--teal); border-radius:8px;
-    padding:8px 12px; font-size:0.78rem;
+    padding:10px 14px; font-size:0.8rem;
+    transition: background .2s ease;
   }
+  .mini-stat:hover { background: rgba(31, 41, 55, 0.8); }
   .mini-stat:nth-child(2){border-top-color:var(--gold);}
   .mini-stat:nth-child(3){border-top-color:var(--blue);}
   .mini-stat:nth-child(4){border-top-color:var(--purple);}
-  .mini-stat b{font-family:'IBM Plex Mono', monospace; display:block; font-size:0.95rem; color:var(--ink);}
-  .project-bullets{margin:0; padding-left:20px; color:var(--ink-soft); font-size:0.92rem;}
-  .project-bullets li{margin-bottom:8px;}
+  .mini-stat b{font-family:'IBM Plex Mono', monospace; display:block; font-size:1rem; color:var(--ink); margin-bottom: 2px;}
+  .project-bullets{margin:0; padding-left:22px; color:var(--ink-soft); font-size:0.94rem;}
+  .project-bullets li{margin-bottom:10px; position: relative;}
   .project-bullets strong{color:var(--ink);}
+  /* Code comment style for project bullets */
+  .project-bullets li::before {
+    content: "/* ";
+    color: #4B5563;
+    font-family: 'IBM Plex Mono', monospace;
+    position: absolute;
+    left: -22px;
+  }
+  .project-bullets li::after {
+    content: " */";
+    color: #4B5563;
+    font-family: 'IBM Plex Mono', monospace;
+  }
 
   /* ---------- Contact / footer ---------- */
-  #contact{padding-bottom:20px;}
+  #contact{padding-bottom:30px;}
   .contact-card{
     background:linear-gradient(120deg, var(--teal-dark) 0%, var(--blue) 55%, var(--purple) 100%);
     color:#fff; border-radius:var(--radius);
-    padding:40px 32px; text-align:center;
+    padding:50px 32px; text-align:center;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(13, 148, 136, 0.3);
   }
-  .contact-card h2{font-size:clamp(1.3rem,3vw,1.8rem); margin-bottom:10px;}
-  .contact-card p{color:#CFE3DD; max-width:520px; margin:0 auto 22px;}
-  .contact-card .contact-row{justify-content:center;}
-  .contact-card .pill-link{background:rgba(255,255,255,0.08); border-color:rgba(255,255,255,0.25); color:#fff;}
-  .contact-card .pill-link:hover{background:rgba(255,255,255,0.18); border-color:#fff;}
+  /* Subtle geometric pattern on contact card */
+  .contact-card::before {
+    content: "";
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    opacity: 0.8;
+  }
+  .contact-card h2{font-size:clamp(1.5rem,4vw,2rem); margin-bottom:12px; position: relative; z-index: 1;}
+  .contact-card p{color:rgba(255, 255, 255, 0.8); max-width:550px; margin:0 auto 28px; position: relative; z-index: 1; font-size: 1.05rem;}
+  .contact-card .contact-row{justify-content:center; position: relative; z-index: 1;}
+  .contact-card .pill-link{background:rgba(255,255,255,0.1); border-color:rgba(255,255,255,0.2); color:#fff;}
+  .contact-card .pill-link:hover{background:rgba(255,255,255,0.2); border-color:#fff; box-shadow: 0 4px 12px rgba(255, 255, 255, 0.2);}
 
-  footer{text-align:center; padding:26px 0 40px; color:var(--ink-soft); font-size:0.82rem;}
+  footer{
+    text-align:center; padding:30px 0 50px; color:var(--ink-soft); font-size:0.85rem;
+    border-top: 1px solid var(--line);
+    margin-top: 20px;
+    position: relative;
+  }
+  /* Code footer style */
+  footer::before {
+    content: "/* ";
+    color: #4B5563;
+    font-family: 'IBM Plex Mono', monospace;
+  }
+  footer::after {
+    content: " */";
+    color: #4B5563;
+    font-family: 'IBM Plex Mono', monospace;
+  }
 </style>
 </head>
 <body>
@@ -309,19 +422,23 @@
     <div class="skills-grid">
       <div class="skill-col">
         <h3><span class="idx">A.</span> Data &amp; Reporting Tools</h3>
-        <div class="skill-row"><span>SQL Server</span><span>QUERIES · JOINS · CTEs</span></div>
-        <div class="skill-row"><span>Power BI</span><span>DASHBOARDS · KPI</span></div>
-        <div class="skill-row"><span>DAX</span><span>SUM · DIVIDE · CALCULATE</span></div>
-        <div class="skill-row"><span>Power Query</span><span>ETL · TRANSFORM</span></div>
-        <div class="skill-row"><span>Microsoft Excel</span><span>VLOOKUP · PIVOT</span></div>
+        <div class="skill-list-wrap">
+          <div class="skill-row"><span>SQL Server</span><span>QUERIES · JOINS · CTEs</span></div>
+          <div class="skill-row"><span>Power BI</span><span>DASHBOARDS · KPI</span></div>
+          <div class="skill-row"><span>DAX</span><span>SUM · DIVIDE · CALCULATE</span></div>
+          <div class="skill-row"><span>Power Query</span><span>ETL · TRANSFORM</span></div>
+          <div class="skill-row"><span>Microsoft Excel</span><span>VLOOKUP · PIVOT</span></div>
+        </div>
       </div>
       <div class="skill-col">
         <h3><span class="idx">B.</span> Analytical Practice</h3>
-        <div class="skill-row"><span>Data Cleaning</span><span>PROFILING · QA</span></div>
-        <div class="skill-row"><span>Data Modeling</span><span>RELATIONSHIPS</span></div>
-        <div class="skill-row"><span>Data Visualization</span><span>REPORT DESIGN</span></div>
-        <div class="skill-row"><span>Problem Solving</span><span>ROOT-CAUSE</span></div>
-        <div class="skill-row"><span>Collaboration</span><span>TEAM SUPPORT</span></div>
+        <div class="skill-list-wrap">
+          <div class="skill-row"><span>Data Cleaning</span><span>PROFILING · QA</span></div>
+          <div class="skill-row"><span>Data Modeling</span><span>RELATIONSHIPS</span></div>
+          <div class="skill-row"><span>Data Visualization</span><span>REPORT DESIGN</span></div>
+          <div class="skill-row"><span>Problem Solving</span><span>ROOT-CAUSE</span></div>
+          <div class="skill-row"><span>Collaboration</span><span>TEAM SUPPORT</span></div>
+        </div>
       </div>
     </div>
   </section>
