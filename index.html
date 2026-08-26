@@ -32,14 +32,12 @@
     --radius:14px;
     --maxw:1080px;
   }
-
   *{box-sizing:border-box;}
   html{scroll-behavior:smooth;}
   @media (prefers-reduced-motion: reduce){
     html{scroll-behavior:auto;}
     *{animation-duration:0.001ms !important; transition-duration:0.001ms !important;}
   }
-
   body{
     margin:0;
     background:var(--bg);
@@ -53,20 +51,15 @@
       linear-gradient(90deg, rgba(55, 65, 81, 0.1) 1px, transparent 1px);
     background-size: 30px 30px;
   }
-
   a{color:inherit;}
   ::selection{background:rgba(13, 148, 136, 0.3); color:#fff;}
-
   h1,h2,h3{
     font-family:'Space Grotesk', 'Segoe UI', sans-serif;
     letter-spacing:-0.01em;
     margin:0;
   }
-
   .mono{font-family:'IBM Plex Mono', monospace;}
-
   .wrap{max-width:var(--maxw); margin:0 auto; padding:0 24px;}
-
   /* ---------- Top nav ---------- */
   .tabbar{
     position:sticky; top:0; z-index:50;
@@ -110,7 +103,6 @@
     .tabs a.active{border-left-color:var(--cyan); border-bottom-color:var(--surface-soft);}
     .navtoggle{display:block;}
   }
-
   /* ---------- Hero ---------- */
   header.hero{
     padding:80px 0 60px;
@@ -149,7 +141,6 @@
   .pill-link svg{width:16px; height:16px; flex-shrink:0;}
   .pill-link.primary{background:var(--teal); border-color:var(--teal); color:#fff;}
   .pill-link.primary:hover{background:var(--teal-dark); border-color:var(--teal-dark);}
-
   /* ---------- KPI strip ---------- */
   .kpi-strip{
     display:grid; grid-template-columns:repeat(4, 1fr); gap:16px;
@@ -175,7 +166,6 @@
   .kpi-card:nth-child(4)::before{background:var(--gold);}
   .kpi-num{font-family:'IBM Plex Mono', monospace; font-size:1.7rem; font-weight:600; color:var(--ink); text-shadow: 0 0 10px rgba(243, 244, 246, 0.2);}
   .kpi-label{font-size:0.8rem; color:var(--ink-soft); margin-top:6px; line-height:1.4;}
-
   /* ---------- Section shell ---------- */
   section{padding:70px 0;}
   .section-head{margin-bottom:32px;}
@@ -191,7 +181,6 @@
   .section-title{font-size:clamp(1.6rem, 3.5vw, 2.2rem); margin-top:8px;}
   section#about{padding-top:40px;}
   .about-text{max-width:720px; color:var(--ink-soft); font-size:1.05rem;}
-
   /* ---------- Skills — code-theme table style ---------- */
   .skills-grid{display:grid; grid-template-columns:1fr 1fr; gap:0; border:1px solid var(--line); border-radius:var(--radius); overflow:hidden; background:var(--surface);}
   @media (max-width:700px){.skills-grid{grid-template-columns:1fr;}}
@@ -203,9 +192,7 @@
   /* Code function style for skill categories */
   .skill-col h3::before { content: "function "; color: var(--purple); font-family: 'IBM Plex Mono', monospace; font-weight: 500; font-size: 0.9rem;}
   .skill-col h3::after { content: "() {"; color: var(--ink-soft); font-family: 'IBM Plex Mono', monospace; font-weight: 500; font-size: 0.9rem;}
-
   .skill-list-wrap::after { content: "}"; color: var(--ink-soft); font-family: 'IBM Plex Mono', monospace; font-weight: 500; font-size: 0.9rem; margin-top: 10px; display: block;}
-
   .skill-row{
     display:flex; justify-content:space-between; align-items:baseline;
     padding:11px 0; border-bottom:1px solid rgba(55, 65, 81, 0.3);
@@ -218,7 +205,6 @@
     color:var(--green); /* Green for 'values' */
     background: rgba(74, 222, 128, 0.05); padding: 2px 6px; border-radius: 4px;
   }
-
   /* ---------- Experience ---------- */
   .exp-card{
     background:var(--surface); border:1px solid var(--line); border-left:4px solid var(--gold);
@@ -244,7 +230,6 @@
     position: absolute;
     left: -22px;
   }
-
   /* ---------- Projects — report canvas cards ---------- */
   .project-card{
     background:var(--surface); border:1px solid var(--line); border-radius:var(--radius);
@@ -257,7 +242,6 @@
   }
   .project-card.card-teal:hover { border-color: rgba(13, 148, 136, 0.5); }
   .project-card.card-coral:hover { border-color: rgba(239, 68, 68, 0.5); }
-
   .report-ribbon{
     display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap;
     background:var(--surface-soft); border-bottom:1px solid var(--line);
@@ -329,7 +313,6 @@
     color: #4B5563;
     font-family: 'IBM Plex Mono', monospace;
   }
-
   /* ---------- Contact / footer ---------- */
   #contact{padding-bottom:30px;}
   .contact-card{
@@ -353,7 +336,6 @@
   .contact-card .contact-row{justify-content:center; position: relative; z-index: 1;}
   .contact-card .pill-link{background:rgba(255,255,255,0.1); border-color:rgba(255,255,255,0.2); color:#fff;}
   .contact-card .pill-link:hover{background:rgba(255,255,255,0.2); border-color:#fff; box-shadow: 0 4px 12px rgba(255, 255, 255, 0.2);}
-
   footer{
     text-align:center; padding:30px 0 50px; color:var(--ink-soft); font-size:0.85rem;
     border-top: 1px solid var(--line);
@@ -374,7 +356,6 @@
 </style>
 </head>
 <body>
-
 <nav class="tabbar">
   <div class="tabbar-inner">
     <a href="#top" class="brand"><span class="dot"></span>Akshay M</a>
@@ -388,12 +369,10 @@
     </div>
   </div>
 </nav>
-
 <div class="wrap" id="top">
   <header class="hero" id="about">
     <h1 class="name">Akshay M</h1>
     <p class="role">Data Analyst turning raw, messy datasets into decision-ready dashboards — SQL for data cleaning &amp; modeling, Power BI &amp; DAX for reporting, Excel for the day-to-day.</p>
-
     <div class="contact-row">
       <a class="pill-link primary" href="mailto:akshaymuneeswaran21@gmail.com">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16v16H4z" stroke="none"/><path d="M22 6l-10 7L2 6" stroke="currentColor" fill="none"/><path d="M2 6h20v12H2z" stroke="currentColor" fill="none"/></svg>
@@ -413,7 +392,6 @@
       </span>
     </div>
   </header>
-
   <section id="skills">
     <div class="section-head">
       <span class="section-tag">// 01 — capabilities</span>
@@ -442,7 +420,6 @@
       </div>
     </div>
   </section>
-
   <section id="experience">
     <div class="section-head">
       <span class="section-tag gold">// 02 — track record</span>
@@ -466,13 +443,11 @@
       </ul>
     </div>
   </section>
-
   <section id="projects">
     <div class="section-head">
       <span class="section-tag coral">// 03 — selected work</span>
       <h2 class="section-title">Featured Projects</h2>
     </div>
-
     <div class="project-card card-teal">
       <div class="report-ribbon">
         <div class="report-ribbon-left">
@@ -499,7 +474,6 @@
         </ul>
       </div>
     </div>
-
     <div class="project-card card-coral">
       <div class="report-ribbon">
         <div class="report-ribbon-left">
@@ -528,7 +502,6 @@
       </div>
     </div>
   </section>
-
   <section id="contact">
     <div class="contact-card">
       <h2>Let's talk data.</h2>
@@ -539,10 +512,8 @@
       </div>
     </div>
   </section>
-
   <footer>© 2026 Akshay M · Built for Data Analytics Portfolio · Chennai, India</footer>
 </div>
-
 <script>
   // Mobile nav toggle
   const toggle = document.getElementById('navToggle');
@@ -555,7 +526,6 @@
     tabs.classList.remove('open');
     toggle.setAttribute('aria-expanded', 'false');
   }));
-
   // Scroll-spy active tab
   const sections = ['about','skills','experience','projects','contact'].map(id => document.getElementById(id));
   const links = tabs.querySelectorAll('a');
@@ -568,6 +538,5 @@
   document.addEventListener('scroll', spy, { passive: true });
   spy();
 </script>
-
 </body>
 </html>
